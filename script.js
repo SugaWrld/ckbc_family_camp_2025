@@ -1,6 +1,6 @@
 const gallery = document.getElementById("gallery");
 const imageFolder = "images/";
-const start = 2361;
+const start = 2971;
 const end = 3398;
 let rotation = 0;
 
