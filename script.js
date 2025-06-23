@@ -1,7 +1,7 @@
 const gallery = document.getElementById("gallery");
 const imageFolder = "images/";
 const start = 2361;
-const end = 2362;
+const end = 2411;
 let rotation = 0;
 
 // Load images dynamically and attach click handler
