@@ -2,7 +2,7 @@ const gallery = document.getElementById("gallery");
 const imageFolder = "images/";
 const start = 2361;
 const end = 3398;
-const imagesPerPage = 100;
+const imagesPerPage = 50;
 
 let currentPage = 0;
 let validImages = [];
