@@ -117,3 +117,24 @@ footer {
 .controls button:hover {
     background-color: #0056b3;
 }
+
+.pagination {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.nav-btn {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.nav-btn:disabled {
+    background-color: #888;
+    cursor: not-allowed;
+}
