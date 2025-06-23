@@ -41,17 +41,3 @@ function openModal(src) {
     modalImg.src = src;
     modalImg.style.transform = "rotate(0deg)";
 }
-
-function closeModal() {
-    document.getElementById("imageModal").style.display = "none";
-}
-
-function rotateLeft() {
-    rotation -= 90;
-    document.getElementById("modalImg").style.transform = `rotate(${rotation}deg)`;
-}
-
-function rotateRight() {
-    rotation += 90;
-    document.getElementById("modalImg").style.transform = `rotate(${rotation}deg)`;
-}
