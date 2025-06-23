@@ -5,80 +5,61 @@ const end = 3398;
 const imagesPerPage = 50;
 
 let currentPage = 0;
-let validImages = [];
-
-function checkImageExists(src) {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => resolve(src);
-    img.onerror = () => resolve(null);
-    img.src = src;
-  });
-}
-
-async function preloadValidImages(batchSize = 50) {
-  const total = end - start + 1;
-
-  for (let i = 0; i < total; i += batchSize) {
-    const batch = [];
-    for (let j = i; j < i + batchSize && (start + j) <= end; j++) {
-      const src = `${imageFolder}IMG_${start + j}.JPG`; // use .jpg if your files are lowercase
-      batch.push(checkImageExists(src));
-    }
-
-    const results = await Promise.all(batch);
-    validImages.push(...results.filter(Boolean));
-  }
-
-  document.getElementById("loading").style.display = "none";
-  loadPage(currentPage);
-}
 
 function loadPage(page) {
-  gallery.innerHTML = "";
+    gallery.innerHTML = "";
+    document.getElementById("loading").style.display = "block";
 
-  const pageStart = page * imagesPerPage;
-  const pageEnd = Math.min(pageStart + imagesPerPage, validImages.length);
+    const pageStart = start + page * imagesPerPage;
+    const pageEnd = Math.min(pageStart + imagesPerPage - 1, end);
 
-  for (let i = pageStart; i < pageEnd; i++) {
-    const src = validImages[i];
+    for (let i = pageStart; i <= pageEnd; i++) {
+        const src = `${imageFolder}IMG_${i}.JPG`; // use .jpg if needed
 
-    const card = document.createElement("div");
-    card.className = "card";
+        const img = new Image();
+        img.src = src;
 
-    const imgElement = document.createElement("img");
-    imgElement.src = src;
-    imgElement.alt = src.split("/").pop();
-    imgElement.onclick = () => openModal(imgElement.src); // optional, if you implement modal
+        img.onload = () => {
+            const card = document.createElement("div");
+            card.className = "card";
 
-    card.appendChild(imgElement);
-    card.innerHTML += `<a href="${src}" download class="btn">Download</a>`;
-    gallery.appendChild(card);
-  }
+            const imgElement = document.createElement("img");
+            imgElement.src = src;
+            imgElement.alt = `IMG_${i}.JPG`;
+            imgElement.onclick = () => openModal(imgElement.src); // optional
 
-  updateNavButtons();
+            card.appendChild(imgElement);
+            card.innerHTML += `<a href="${src}" download class="btn">Download</a>`;
+            gallery.appendChild(card);
+        };
+
+        // If image doesn't exist, do nothing
+        img.onerror = () => {};
+    }
+
+    document.getElementById("loading").style.display = "none";
+    updateNavButtons();
 }
 
 function updateNavButtons() {
-  const totalPages = Math.ceil(validImages.length / imagesPerPage);
-  document.getElementById("prevBtn").disabled = currentPage === 0;
-  document.getElementById("nextBtn").disabled = currentPage >= totalPages - 1;
+    const totalPages = Math.ceil((end - start + 1) / imagesPerPage);
+    document.getElementById("prevBtn").disabled = currentPage === 0;
+    document.getElementById("nextBtn").disabled = currentPage >= totalPages - 1;
 }
 
 document.getElementById("prevBtn").onclick = () => {
-  if (currentPage > 0) {
-    currentPage--;
-    loadPage(currentPage);
-  }
+    if (currentPage > 0) {
+        currentPage--;
+        loadPage(currentPage);
+    }
 };
 
 document.getElementById("nextBtn").onclick = () => {
-  const totalPages = Math.ceil(validImages.length / imagesPerPage);
-  if (currentPage < totalPages - 1) {
-    currentPage++;
-    loadPage(currentPage);
-  }
+    const totalPages = Math.ceil((end - start + 1) / imagesPerPage);
+    if (currentPage < totalPages - 1) {
+        currentPage++;
+        loadPage(currentPage);
+    }
 };
 
-// Start loading
-preloadValidImages();
+loadPage(currentPage);
