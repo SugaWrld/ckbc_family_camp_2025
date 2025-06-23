@@ -6,7 +6,7 @@ let rotation = 0;
 
 // Load images dynamically and attach click handler
 for (let i = start; i <= end; i++) {
-    const filename = `IMG_${i}.jpg`;
+    const filename = `IMG_${i}.JPG`;
     const img = new Image();
     img.src = imageFolder + filename;
 
