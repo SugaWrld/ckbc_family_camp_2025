@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CKBC Family Camp 2025 Gallery</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>CKBC Family Camp 2025 Gallery</h1>
+        <p>If download button is not working, press and hold on the image for save image/ download options!</p>
+    </header>
+
+    <main class="gallery" id="gallery">
+        <!-- JavaScript will load image cards here -->
+    </main>
+
+    <footer>
+        <p>&copy; 2025 CKBC. All rights reserved.</p>
+    </footer>
+
+    <!-- Modal for full-size image -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="modalImg" class="modal-content">
+        <div class="controls">
+            <button onclick="rotateLeft()">⟲ Rotate Left</button>
+            <button onclick="rotateRight()">⟳ Rotate Right</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
