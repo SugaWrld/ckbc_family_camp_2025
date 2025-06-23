@@ -1,7 +1,7 @@
 const gallery = document.getElementById("gallery");
 const imageFolder = "images/";
 const start = 2361;
-const end = 2362;
+const end = 3398;
 let rotation = 0;
 
 // Load images dynamically and attach click handler
@@ -32,12 +32,3 @@ for (let i = start; i <= end; i++) {
     };
 }
 
-// Modal control functions
-function openModal(src) {
-    const modal = document.getElementById("imageModal");
-    const modalImg = document.getElementById("modalImg");
-    rotation = 0;
-    modal.style.display = "block";
-    modalImg.src = src;
-    modalImg.style.transform = "rotate(0deg)";
-}
