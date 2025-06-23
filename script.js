@@ -8,14 +8,16 @@ let currentPage = 0;
 
 function loadPage(page) {
     gallery.innerHTML = "";
-    document.getElementById("loading").style.display = "block";
+    const loading = document.getElementById("loading");
+    loading.style.display = "block";
 
     const pageStart = start + page * imagesPerPage;
     const pageEnd = Math.min(pageStart + imagesPerPage - 1, end);
+    let imagesTried = 0;
+    const totalImages = pageEnd - pageStart + 1;
 
     for (let i = pageStart; i <= pageEnd; i++) {
-        const src = `${imageFolder}IMG_${i}.JPG`; // use .jpg if needed
-
+        const src = `${imageFolder}IMG_${i}.JPG`; // or .jpg
         const img = new Image();
         img.src = src;
 
@@ -31,15 +33,24 @@ function loadPage(page) {
             card.appendChild(imgElement);
             card.innerHTML += `<a href="${src}" download class="btn">Download</a>`;
             gallery.appendChild(card);
+            checkIfDone();
         };
 
-        // If image doesn't exist, do nothing
-        img.onerror = () => {};
+        img.onerror = () => {
+            // Skip broken image
+            checkIfDone();
+        };
     }
 
-    document.getElementById("loading").style.display = "none";
-    updateNavButtons();
+    function checkIfDone() {
+        imagesTried++;
+        if (imagesTried === totalImages) {
+            loading.style.display = "none";
+            updateNavButtons();
+        }
+    }
 }
+
 
 function updateNavButtons() {
     const totalPages = Math.ceil((end - start + 1) / imagesPerPage);
